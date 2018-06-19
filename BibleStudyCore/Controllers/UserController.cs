@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using BibleStudyCore.Data;
 using BibleStudyCore.Models;
@@ -11,17 +12,17 @@ namespace BibleStudyCore.Controllers
 {
     public class UserController : Controller
     {
-        private readonly ApplicationDbContext _dbContext;
-        private string Id { get; }
-
-        public UserController(ApplicationDbContext dbContext)
+        private readonly BibleDbContext _dbContext;
+        
+        public UserController(BibleDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-    //    public async Task<IEnumerable<User>> Index()
-    //    {
-    //        //return await _dbContext.User.FromSql("dbo.GetVerseById @Id", Id).ToListAsync();
-    //    }
+        public async Task<IEnumerable<User>> Index()
+        {
+            string Email = HttpContext.User.Identity.Name.ToString();
+            return await _dbContext.User.FromSql("usp_GetVerseByEmail @p0", Email).ToListAsync();
+        }
     }
 }

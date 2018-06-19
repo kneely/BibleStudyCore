@@ -13,7 +13,6 @@ namespace BibleStudyCore.Controllers
     {
         public IActionResult Index()
         {
-            var String = HttpContext.User.Identity(); 
             return View();
         }
                                

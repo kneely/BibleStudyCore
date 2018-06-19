@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BibleStudyCore.Models;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
+using Ninject.Planning.Targets;
 
 namespace BibleStudyCore.Data
 {
-    public class BibleDbContext   : DbContext
+    public abstract class BibleDbContext : DbContext
     {
-        public BibleDbContext(DbContextOptions<BibleDbContext> options)
+        protected BibleDbContext(DbContextOptions<BibleDbContext> options)
             : base(options)
         {
         }

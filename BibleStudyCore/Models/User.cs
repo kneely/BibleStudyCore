@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace BibleStudyCore.Models
 {
     public class User
     {
+        [StringLength(256)]
+        public string Email { get; set; }
         [Key]
         public string Id { get; set; }
+
     }
 }
