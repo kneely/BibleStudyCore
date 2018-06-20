@@ -1,28 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using BibleStudyCore.Data;
 using BibleStudyCore.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace BibleStudyCore.Controllers
 {
     public class UserController : Controller
     {
-        private readonly BibleDbContext _dbContext;
-        
-        public UserController(BibleDbContext dbContext)
+        private readonly ApplicationDbContext _dbContext;
+
+        public UserController(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
         public async Task<IEnumerable<User>> Index()
         {
-            string Email = HttpContext.User.Identity.Name.ToString();
-            return await _dbContext.User.FromSql("usp_GetVerseByEmail @p0", Email).ToListAsync();
+            var userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return await _dbContext.User.FromSql((string)$"EXECUTE usp_GetVerseById @Id", 
+                new SqlParameter("@Id", SqlDbType.NVarChar) { Value = userId }).ToArrayAsync();
+            
+
+            //HttpClient verse = new HttpClient();
+            //verse.BaseAddress = new Uri(https://labs.bible.org/api/?);
         }
     }
 }
+
+//\'({Email})\'
