@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
+using Newtonsoft.Json.Linq;
 
 namespace BibleStudyCore.Controllers
 {
@@ -32,7 +33,10 @@ namespace BibleStudyCore.Controllers
             var userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             return await _dbContext.User.FromSql((string)$"EXECUTE usp_GetVerseById @Id", 
                 new SqlParameter("@Id", SqlDbType.NVarChar) { Value = userId }).ToArrayAsync();
-            
+           
+            //JObject list = JObject.Parse(raw.ToString());
+            //string verse = (string) list["verse"];
+            //return verse;
 
             //HttpClient verse = new HttpClient();
             //verse.BaseAddress = new Uri(https://labs.bible.org/api/?);
