@@ -1,33 +1,12 @@
-﻿@model IEnumerable<BibleStudyCore.Models.Json>
+﻿@model Microsoft.AspNetCore.Html.HtmlFormattableString
 
 @{
     ViewData["Title"] = "Index";
+    var message = ViewBag.verse;
 }
 
 <h2>Index</h2>
+ 
 
-
-
-    
-@foreach (var item in ViewBag.Message) {
-        
-        <h1>@item.bookname</h1>
-                
-            
-            <h2>
-                @item.chapter
-            </h2>
-            <h2>
-                @item.verse
-            </h2>
-            <p>
-                @item.text
-            </p>
-            <h1>
-                @item.title
-            </h1>
-          
-       
-}
     
 

@@ -11,9 +11,7 @@ namespace BibleStudyCore.Models
         [JsonIgnore]
         public string Email { get; set; }
         public string Verse1 { get; set; }
-        public string Verse2 { get; set; }
-        public string Verse3 { get; set; }
-        public string Verse4 { get; set; }
+      
 
         //Verse1.Replace(" ", "+");
 
