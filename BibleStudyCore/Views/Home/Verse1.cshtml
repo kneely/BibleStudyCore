@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewData["Title"] = "Verse1";
+}
+ 
+<br/>
+<div class="progress">
+    <div class="progress-bar" role="progressbar" aria-valuenow="0"
+         aria-valuemin="0" aria-valuemax="100" style="width:0%">
+        0%
+    </div>
+</div> 
+
+<h2>@ViewBag.Verse</h2>
+
+<div>
+    @ViewBag.Text
+</div>
+<div align="right">
+
+    @Html.ActionLink("Next Verse", "Verse2", "Home", null, new { @class = "btn btn-primary" })
+
+</div>
+
+
