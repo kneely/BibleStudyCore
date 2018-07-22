@@ -1,12 +1,13 @@
-﻿@model Microsoft.AspNetCore.Html.HtmlFormattableString
+﻿@model Microsoft.AspNetCore.Html.HtmlContentBuilder
 
 @{
     ViewData["Title"] = "Index";
-    var message = ViewBag.verse;
+    
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.Verse</h2>
  
+@ViewBag.Text   
 
-    
+<button type="submit" value="submit">Next</button>
 
