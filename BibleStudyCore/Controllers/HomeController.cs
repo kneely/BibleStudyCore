@@ -247,7 +247,7 @@ namespace BibleStudyCore.Controllers
             SqlConnection conn;
             SqlCommand comm;
             SqlDataReader dataReader;
-            string sql = $"usp_GetVerse4ById";
+            string sql = $"usp_UpdateProgressID";
             conn = new SqlConnection(connection);
             {
                 comm = new SqlCommand(sql, conn);
@@ -256,27 +256,13 @@ namespace BibleStudyCore.Controllers
                 conn.Open();
                 dataReader = comm.ExecuteReader();
                 dataReader.Read();
-                string verse = dataReader.GetString(dataReader.GetOrdinal("Verse4"));
+                //string verse = dataReader.GetString(dataReader.GetOrdinal("Verse4"));
                 dataReader.Close();
                 comm.Dispose();
                 conn.Close();
 
-                using (HttpClient client = new HttpClient())
-                {
-                    string baseUrl = $"http://labs.bible.org/api/?passage=" + verse;
-
-                    HttpResponseMessage response = await client.GetAsync(baseUrl);
-                    response.EnsureSuccessStatusCode();
-                    string responseBody = await response.Content.ReadAsStringAsync();
-
-                    HtmlContentBuilder str = new HtmlContentBuilder();
-                    str.AppendHtml(responseBody);
-
-                    ViewBag.Verse = verse;
-                    ViewBag.Text = str;
-
                     return View();
-                }
+                
             }
         }
 

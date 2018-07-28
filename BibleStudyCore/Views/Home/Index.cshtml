@@ -1,13 +1,13 @@
 ﻿
 @{
     ViewData["Title"] = "Index";
-    
+
 }
 
 <div>
     <h3>
         Welcome to Day <b>@ViewBag.Progress</b> of the Discipleship Journal Bible Reading Plan.
-    </h3>  
+    </h3>
     <p>
         By reading from four separate places in the Scripture every day, you should be able to
         better grasp the unity of the Scriptures, as well as enjoy the variety of seeing four different viewpoints. You can begin at any point of the year.
@@ -15,18 +15,17 @@
     <p>
         To prevent the frustration of falling behind, which most of us tend to do when following a Bible reading plan, each month of this plan gives you only twenty-five readings.
         Since you’ll have several “free days” each month, you could set aside Sundays to either not read at all or to catch up on any readings you may have missed in the past week.
-    </p>  
+    </p>
     <p>
         If you finish the month’s readings by the twenty-fifth, you could use the final days of the month to study the passages that challenged or intrigued you.
-    </p> 
+    </p>
     <p>
         All the credit for the Study Plan goes to the Discipleship Journal. Credit for the API where I get the verses go to <a href="https://labs.bible.org/">Bible.org Labs</a>.
     </p>
     <p>
-        If you have any problems with this service or have some suggestions please feel free to contact me. <br />
-        @Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "btn btn-primary" })
+        If you have any problems with this service or have some suggestions please feel free to  @Html.ActionLink("contact", "Contact", "Home") me.
     </p>
 </div>
 <div align="right">
-    @Html.ActionLink("Begin", "Verse1", "Home",null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Begin", "Verse1", "Home", null, new { @class = "btn btn-primary" })
 </div>

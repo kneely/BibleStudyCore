@@ -16,9 +16,13 @@
 <div>
     @ViewBag.Text
 </div>
-<div>
-
-    @Html.ActionLink("Go Back", "Verse3", "Home", null, new { @class = "btn btn-primary btn-large align-left" })
-    @*@Html.ActionLink("Complete", "Complete", "User",null, new { @class = "btn btn-primary btn-large align-right" })*@
-
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6">
+            @Html.ActionLink("Go Back", "Verse3", "Home", null, new { @class = "btn btn-primary" })
+        </div>
+        <div class="col-sm-6" align="right">
+            @Html.ActionLink("Complete", "Complete", "Home", null, new { @class = "btn btn-primary" })
+        </div>
+    </div>
 </div>
