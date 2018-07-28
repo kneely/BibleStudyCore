@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
+using BibleStudyCore.Data;
+using BibleStudyCore.Models;
+using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
-using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using BibleStudyCore.Data;
-using Microsoft.AspNetCore.Mvc;
-using BibleStudyCore.Models;
-using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Pages.Internal.Account;
 
 namespace BibleStudyCore.Controllers
 {
@@ -26,74 +25,91 @@ namespace BibleStudyCore.Controllers
 
         public async Task<ViewResult> Index()
         {
-            var userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            string connection =
-                $"Data Source=185.45.113.166;Initial Catalog=Bible;Integrated Security=False;User ID=kevin;Password=Krn171995;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-
-            SqlConnection conn;
-            SqlCommand comm;
-            SqlDataReader dataReader;
-            string sql = $"usp_GetVerse1ById";
-            conn = new SqlConnection(connection);
+            try
             {
+                var userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                string connection =
+                    $"Data Source=185.45.113.166;Initial Catalog=Bible;Integrated Security=False;User ID=kevin;Password=Krn171995;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
-                comm = new SqlCommand(sql, conn);
-                comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.Add(new SqlParameter("@ID", userId));
-                conn.Open();
-                dataReader = comm.ExecuteReader();
-                dataReader.Read();
-                decimal progress = dataReader.GetInt32(dataReader.GetOrdinal("ProgressID"));
-                dataReader.Close();
-                comm.Dispose();
-                conn.Close();
-
-                ViewBag.Progress = progress;
-
-                return View();
-            }
-        }
-        public async Task<ViewResult> Verse1()
-        {
-            var userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            string connection =
-                $"Data Source=185.45.113.166;Initial Catalog=Bible;Integrated Security=False;User ID=kevin;Password=Krn171995;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-
-            SqlConnection conn;
-            SqlCommand comm;
-            SqlDataReader dataReader;
-            string sql = $"usp_GetVerse1ById";
-            conn = new SqlConnection(connection);
-            {
-
-                comm = new SqlCommand(sql, conn);
-                comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.Add(new SqlParameter("@ID", userId));
-                conn.Open();
-                dataReader = comm.ExecuteReader();
-                dataReader.Read();
-                string verse = dataReader.GetString(dataReader.GetOrdinal("Verse1"));
-                dataReader.Close();
-                comm.Dispose();
-                conn.Close();
-
-                using (HttpClient client = new HttpClient())
+                SqlConnection conn;
+                SqlCommand comm;
+                SqlDataReader dataReader;
+                string sql = $"usp_GetVerse1ById";
+                conn = new SqlConnection(connection);
                 {
-                    string baseUrl = $"http://labs.bible.org/api/?passage=" + verse;
 
-                    HttpResponseMessage response = await client.GetAsync(baseUrl);
-                    response.EnsureSuccessStatusCode();
-                    string responseBody = await response.Content.ReadAsStringAsync();
+                    comm = new SqlCommand(sql, conn);
+                    comm.CommandType = CommandType.StoredProcedure;
+                    comm.Parameters.Add(new SqlParameter("@ID", userId));
+                    conn.Open();
+                    dataReader = comm.ExecuteReader();
+                    dataReader.Read();
+                    decimal progress = dataReader.GetInt32(dataReader.GetOrdinal("ProgressID"));
+                    dataReader.Close();
+                    comm.Dispose();
+                    conn.Close();
 
-                    HtmlContentBuilder str = new HtmlContentBuilder();
-                    str.AppendHtml(responseBody);
-
-                    ViewBag.Verse = verse;
-                    ViewBag.Text = str;
+                    ViewBag.Progress = progress;
 
                     return View();
                 }
             }
+            catch
+            {
+                return View();
+            }
+
+        }
+        public async Task<ViewResult> Verse1()
+        {
+            try
+            {
+                var userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                string connection =
+                    $"Data Source=185.45.113.166;Initial Catalog=Bible;Integrated Security=False;User ID=kevin;Password=Krn171995;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+
+                SqlConnection conn;
+                SqlCommand comm;
+                SqlDataReader dataReader;
+                string sql = $"usp_GetVerse1ById";
+                conn = new SqlConnection(connection);
+                {
+
+                    comm = new SqlCommand(sql, conn);
+                    comm.CommandType = CommandType.StoredProcedure;
+                    comm.Parameters.Add(new SqlParameter("@ID", userId));
+                    conn.Open();
+                    dataReader = comm.ExecuteReader();
+                    dataReader.Read();
+                    string verse = dataReader.GetString(dataReader.GetOrdinal("Verse1"));
+                    dataReader.Close();
+                    comm.Dispose();
+                    conn.Close();
+
+                    using (HttpClient client = new HttpClient())
+                    {
+                        string baseUrl = $"http://labs.bible.org/api/?passage=" + verse;
+
+                        HttpResponseMessage response = await client.GetAsync(baseUrl);
+                        response.EnsureSuccessStatusCode();
+                        string responseBody = await response.Content.ReadAsStringAsync();
+
+                        HtmlContentBuilder str = new HtmlContentBuilder();
+                        str.AppendHtml(responseBody);
+
+                        ViewBag.Verse = verse;
+                        ViewBag.Text = str;
+
+                        return View();
+                    }
+                }
+            }
+            catch
+            {
+                return View();
+            }
+
+
         }
         public async Task<ViewResult> Verse2()
         {

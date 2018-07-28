@@ -45,6 +45,16 @@ namespace BibleStudyCore
 
             services.AddSession();
 
+            services.AddHsts(options =>
+            {
+                options.Preload = true;
+                options.IncludeSubDomains = true;
+                options.MaxAge = TimeSpan.FromDays(60);
+                options.ExcludedHosts.Add("localhost");
+                options.ExcludedHosts.Add("185.45.113.162");
+                options.ExcludedHosts.Add("127.0.0.1");
+            });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
