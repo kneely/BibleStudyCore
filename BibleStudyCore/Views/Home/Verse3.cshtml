@@ -1,28 +1,38 @@
-﻿
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 @{
     ViewData["Title"] = "Verse 3";
 }
 
-<br />
-<div class="progress">
-    <div class="progress-bar" role="progressbar" aria-valuenow="50"
-         aria-valuemin="0" aria-valuemax="100" style="width:50%">
-        50%
-    </div>
-</div>
-
-<h2>@ViewBag.Verse</h2>
-
-<div>
-    @ViewBag.Text
-</div>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-xs-6">
-            @Html.ActionLink("Go Back", "Verse2", "Home", null, new { @class = "btn btn-primary btn-sm" })
-        </div>
-        <div class="col-xs-6" align="right">
-            @Html.ActionLink("Next Verse", "Verse4", "Home", null, new { @class = "btn btn-primary btn-sm" })
+@if (SignInManager.IsSignedIn(User))
+{
+    <br />
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuenow="50"
+             aria-valuemin="0" aria-valuemax="100" style="width:50%">
+            50%
         </div>
     </div>
-</div>
+
+    <h2>@ViewBag.Verse</h2>
+
+    <div>
+        @ViewBag.Text
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-6">
+                @Html.ActionLink("Go Back", "Verse2", "Home", null, new { @class = "btn btn-primary btn-sm" })
+            </div>
+            <div class="col-xs-6" align="right">
+                @Html.ActionLink("Next Verse", "Verse4", "Home", null, new { @class = "btn btn-primary btn-sm" })
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <h3>Please <a asp-area="Identity" asp-page="/Account/Login">Login</a> or <a asp-area="Identity" asp-page="/Account/Register">Register</a> to continue.</h3>
+}
